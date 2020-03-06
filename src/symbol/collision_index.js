@@ -7,6 +7,7 @@ import PathInterpolator from './path_interpolator';
 import * as intersectionTests from '../util/intersection_tests';
 import Grid from './grid_index';
 import {mat4} from 'gl-matrix';
+import ONE_EM from '../symbol/one_em';
 
 import * as projection from '../symbol/projection';
 
@@ -103,7 +104,7 @@ class CollisionIndex {
 
         const perspectiveRatio = this.projectAnchor(posMatrix, symbol.anchorX, symbol.anchorY).perspectiveRatio;
         const labelPlaneFontSize = pitchWithMap ? fontSize / perspectiveRatio : fontSize * perspectiveRatio;
-        const labelPlaneFontScale = labelPlaneFontSize / 24;
+        const labelPlaneFontScale = labelPlaneFontSize / ONE_EM;
 
         const tileUnitAnchorPoint = new Point(symbol.anchorX, symbol.anchorY);
         const labelPlaneAnchorPoint = projection.project(tileUnitAnchorPoint, labelPlaneMatrix).point;
@@ -139,7 +140,11 @@ class CollisionIndex {
             const first = firstAndLastGlyph.first;
             const last = firstAndLastGlyph.last;
 
-            let projectedPath = first.path.slice(1).reverse().concat(last.path.slice(1));
+            let projectedPath = [];
+            for (let i = first.path.length - 1; i >= 1; i--)
+                projectedPath.push(first.path[i]);
+            for (let i = 1; i < last.path.length; i++)
+                projectedPath.push(last.path[i]);
 
             // Tolerate a slightly longer distance than one diameter between two adjacent circles
             const circleDist = radius * 2.5;

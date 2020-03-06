@@ -39,7 +39,7 @@ class PathInterpolator {
 
         t = clamp(t, 0, 1);
 
-        // Find the correct segment. Use a cached index value to start the search
+        // Find the correct segment [p0, p1] where p0 <= x < p1
         let currentIndex = 1;
         let distOfCurrentIdx = this._distances[currentIndex];
         const distToTarget = t * this.paddedLength + this.padding;
@@ -48,7 +48,7 @@ class PathInterpolator {
             distOfCurrentIdx = this._distances[++currentIndex];
         }
 
-        // We've found a segment with two points p0 and p1 where p0 <= x < p1. Interpolate between these two points
+        // Interpolate between the two points of the segment
         const idxOfPrevPoint = currentIndex - 1;
         const distOfPrevIdx = this._distances[idxOfPrevPoint];
         const segmentLength = distOfCurrentIdx - distOfPrevIdx;
