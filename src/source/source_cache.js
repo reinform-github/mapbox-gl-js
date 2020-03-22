@@ -50,6 +50,7 @@ class SourceCache extends Evented {
     _timers: {[_: any]: TimeoutID};
     _cacheTimers: {[_: any]: TimeoutID};
     _maxTileCacheSize: ?number;
+    _sourceCacheSettings: {[key: string]: {tilesSize: number}};
     _paused: boolean;
     _shouldReloadOnResume: boolean;
     _coveredTiles: {[_: string]: boolean};
@@ -103,6 +104,7 @@ class SourceCache extends Evented {
     onAdd(map: Map) {
         this.map = map;
         this._maxTileCacheSize = map ? map._maxTileCacheSize : null;
+        this._sourceCacheSettings = map ? map._sourceCacheSettings : {};
         if (this._source && this._source.onAdd) {
             this._source.onAdd(map);
         }
@@ -417,8 +419,15 @@ class SourceCache extends Evented {
         const approxTilesInView = widthInTiles * heightInTiles;
         const commonZoomRange = 5;
 
-        const viewDependentMaxSize = Math.floor(approxTilesInView * commonZoomRange);
-        const maxSize = typeof this._maxTileCacheSize === 'number' ? Math.min(this._maxTileCacheSize, viewDependentMaxSize) : viewDependentMaxSize;
+        let maxSize;
+        const sourceCacheSettings = this._sourceCacheSettings ? this._sourceCacheSettings[this._source.id] : {};
+        if (!!sourceCacheSettings && !!sourceCacheSettings.tilesSize) {
+            maxSize = sourceCacheSettings.tilesSize;
+        } else {
+            const viewDependentMaxSize = Math.floor(approxTilesInView * commonZoomRange);
+            maxSize = typeof this._maxTileCacheSize === 'number' ?
+                Math.min(this._maxTileCacheSize, viewDependentMaxSize) : viewDependentMaxSize;
+        }
 
         this._cache.setMaxSize(maxSize);
     }
