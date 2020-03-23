@@ -4,9 +4,9 @@ node_js:
 
 install:
   - npm ci
-build:
-  - npm run build-css && npm run build-prod-min && npm run build-prod
+script:
+  - npm run build-prod-min && npm run build-prod && npm run build-css
 deploy:
   provider: npm
   email: "amalov@reinform-int.ru"
-  api_key: ${{ secrets.NPM_API_KEY }}
+  api_key: "${NPM_API_KEY}"
