@@ -12,7 +12,9 @@ sources: {...},
 layers: []
 }
 `
+
 ####Type Definition
+
 `sourceCacheSettings: {[key: string]: {tilesSize: number}}; `
 
 ---------
