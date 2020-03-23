@@ -372,8 +372,7 @@ class Map extends Camera {
         this._interactive = options.interactive;
         this._maxTileCacheSize = options.maxTileCacheSize;
         this._sourceCacheSettings =
-            !!options.style && !!options.style.metadata && !!options.style.metadata['sourceCacheSettings']
-                ? options.style.metadata['sourceCacheSettings'] : {};
+            !!options.style && !!options.style.metadata && !!options.style.metadata['sourceCacheSettings'] ? options.style.metadata['sourceCacheSettings'] : {};
 
         this._failIfMajorPerformanceCaveat = options.failIfMajorPerformanceCaveat;
         this._preserveDrawingBuffer = options.preserveDrawingBuffer;
