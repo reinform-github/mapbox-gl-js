@@ -9,4 +9,4 @@ script:
 deploy:
   provider: npm
   email: "amalov@reinform-int.ru"
-  api_key: "${NPM_API_KEY}"
+  api_key: ${NPM_API_KEY}
