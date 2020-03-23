@@ -8,5 +8,6 @@ script:
   - npm run build-prod-min && npm run build-prod && npm run build-css
 deploy:
   provider: npm
+  skip_cleanup: true
   email: "amalov@reinform-int.ru"
   api_key: ${NPM_API_KEY}
