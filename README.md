@@ -17,6 +17,10 @@ layers: []
 
 `sourceCacheSettings: {[key: string]: {tilesSize: number}}; `
 
+
+#### Install
+npm install rif-mapbox-gl -S
+
 ---------
 
 [<img width="400" alt="Mapbox" src="https://raw.githubusercontent.com/mapbox/mapbox-gl-js-docs/publisher-production/docs/pages/assets/logo.png">](https://www.mapbox.com/)
