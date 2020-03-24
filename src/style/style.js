@@ -628,6 +628,10 @@ class Style extends Evented {
         return this.sourceCaches[id] && this.sourceCaches[id].getSource();
     }
 
+    getSourceCache(id: string): Object {
+        return this.sourceCaches[id];
+    }
+
     /**
      * Add a layer to the map style. The layer will be inserted before the layer with
      * ID `before`, or appended if `before` is omitted.

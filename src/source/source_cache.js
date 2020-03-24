@@ -739,6 +739,10 @@ class SourceCache extends Evented {
         return tile;
     }
 
+    preloadTile(z: number, x: number, y: number) {
+        this._addTile(new OverscaledTileID(z - 1, 0, z, x, y));
+    }
+
     _setTileReloadTimer(id: string, tile: Tile) {
         if (id in this._timers) {
             clearTimeout(this._timers[id]);
@@ -773,7 +777,7 @@ class SourceCache extends Evented {
         if (tile.uses > 0)
             return;
 
-        if (tile.hasData() && tile.state !== 'reloading') {
+        if (tile.hasData() && tile.state !== 'reloading' || !!this._sourceCacheSettings[this._source.id]) {
             this._cache.add(tile.tileID, tile, tile.getExpiryTimeout());
         } else {
             tile.aborted = true;

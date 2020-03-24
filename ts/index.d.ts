@@ -175,6 +175,8 @@ declare namespace mapboxgl {
 
         getSource(id: string): AnySourceImpl;
 
+        getSourceCache(id: string): SourceCache;
+
         addImage(name: string, image: HTMLImageElement | ArrayBufferView | { width: number, height: number, data: Uint8Array | Uint8ClampedArray } | ImageData, options?: { pixelRatio?: number, sdf?: boolean }): this;
 
         hasImage(name: string): boolean;
@@ -934,6 +936,10 @@ declare namespace mapboxgl {
         animate?: boolean;
 
         canvas: string | HTMLCanvasElement;
+    }
+
+    export interface SourceCache {
+        preloadTile(z: number, x: number, y: number): void;
     }
 
     interface VectorSource extends Source {

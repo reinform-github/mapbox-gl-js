@@ -1462,6 +1462,10 @@ class Map extends Camera {
         return this.style.getSource(id);
     }
 
+    getSourceCache(id: string) {
+        return this.style.getSourceCache(id);
+    }
+
     // eslint-disable-next-line jsdoc/require-returns
     /**
      * Add an image to the style. This image can be displayed on the map like any other icon in the style's
