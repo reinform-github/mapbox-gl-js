@@ -740,7 +740,7 @@ class SourceCache extends Evented {
     }
 
     preloadTile(z: number, x: number, y: number) {
-        this._addTile(new OverscaledTileID(z - 1, 0, z, x, y));
+        this._addTile(new OverscaledTileID(z, 0, z, x, y));
     }
 
     _setTileReloadTimer(id: string, tile: Tile) {
