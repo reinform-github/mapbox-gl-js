@@ -137,6 +137,10 @@ class SourceCache extends Evented {
         return this._source;
     }
 
+    keepCache() {
+       return !!this._sourceCacheSettings[this._source.id];
+    }
+
     pause() {
         this._paused = true;
     }
