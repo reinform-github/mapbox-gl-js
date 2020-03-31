@@ -1,7 +1,7 @@
 {
   "name": "rif-mapbox-gl",
   "description": "A WebGL interactive maps library",
-  "version": "1.9.0-r5",
+  "version": "1.9.0-r6",
   "main": "dist/mapbox-gl.js",
   "style": "dist/mapbox-gl.css",
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -45,6 +45,7 @@
     "@mapbox/mvt-fixtures": "^3.6.0",
     "@octokit/rest": "^16.30.1",
     "@rollup/plugin-strip": "^1.3.1",
+    "@types/mapbox-gl": "^1.8.2",
     "address": "^1.1.2",
     "babel-eslint": "^10.0.1",
     "benchmark": "^2.1.4",
