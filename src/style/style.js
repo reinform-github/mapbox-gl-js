@@ -1009,7 +1009,10 @@ class Style extends Evented {
         this._updatedLayers[layer.id] = true;
         if (layer.source && !this._updatedSources[layer.source] &&
             //Skip for raster layers (https://github.com/mapbox/mapbox-gl-js/issues/7865)
-            this.sourceCaches[layer.source].getSource().type !== 'raster' && this.sourceCaches[layer.source].getSource().type !== 'vector' && !this.sourceCaches[layer.source].keepCache()) {
+            this.sourceCaches[layer.source].getSource().type !== 'raster' &&
+            // skip for custom cache
+            !this.sourceCaches[layer.source].keepCache()) {
+
             this._updatedSources[layer.source] = 'reload';
             this.sourceCaches[layer.source].pause();
         }
