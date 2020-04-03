@@ -50,7 +50,7 @@ class SourceCache extends Evented {
     _timers: {[_: any]: TimeoutID};
     _cacheTimers: {[_: any]: TimeoutID};
     _maxTileCacheSize: ?number;
-    _sourceCacheSettings: {[key: string]: {tilesSize: number}};
+    _sourceCacheSettings: {tilesSize?: number};
     _paused: boolean;
     _shouldReloadOnResume: boolean;
     _coveredTiles: {[_: string]: boolean};
@@ -99,12 +99,17 @@ class SourceCache extends Evented {
 
         this._coveredTiles = {};
         this._state = new SourceFeatureState();
+
+        this._sourceCacheSettings = {};
+    }
+
+    setCacheSettings(settings: {tilesSize: number}) {
+        this._sourceCacheSettings = settings;
     }
 
     onAdd(map: Map) {
         this.map = map;
         this._maxTileCacheSize = map ? map._maxTileCacheSize : null;
-        this._sourceCacheSettings = map ? map._sourceCacheSettings : {};
         if (this._source && this._source.onAdd) {
             this._source.onAdd(map);
         }
@@ -138,7 +143,7 @@ class SourceCache extends Evented {
     }
 
     keepCache() {
-       return !!this._sourceCacheSettings[this._source.id];
+       return !!this._sourceCacheSettings.tilesSize;
     }
 
     pause() {
@@ -424,9 +429,8 @@ class SourceCache extends Evented {
         const commonZoomRange = 5;
 
         let maxSize;
-        const sourceCacheSettings = this._sourceCacheSettings ? this._sourceCacheSettings[this._source.id] : {};
-        if (!!sourceCacheSettings && !!sourceCacheSettings.tilesSize) {
-            maxSize = sourceCacheSettings.tilesSize;
+        if (this._sourceCacheSettings.tilesSize) {
+            maxSize = this._sourceCacheSettings.tilesSize;
         } else {
             const viewDependentMaxSize = Math.floor(approxTilesInView * commonZoomRange);
             maxSize = typeof this._maxTileCacheSize === 'number' ?
@@ -780,8 +784,8 @@ class SourceCache extends Evented {
 
         if (tile.uses > 0)
             return;
-
-        if (tile.hasData() && tile.state !== 'reloading' || !!this._sourceCacheSettings[this._source.id]) {
+        // rif: is not set mapbox doesn't wait when custom cahce preload success
+        if (tile.hasData() && tile.state !== 'reloading' || !!this._sourceCacheSettings.tilesSize) {
             this._cache.add(tile.tileID, tile, tile.getExpiryTimeout());
         } else {
             tile.aborted = true;

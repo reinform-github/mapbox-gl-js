@@ -1013,6 +1013,7 @@ declare namespace mapboxgl {
     }
 
     export interface SourceCache {
+        setCacheSettings(settings: {tilesSize: number});
         preloadTile(z: number, x: number, y: number): void;
     }
 
